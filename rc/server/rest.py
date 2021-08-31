@@ -13,7 +13,7 @@ Input:
 Process: 
 Output: string
 """    
-    return "Flask App"
+    return "Flask App - pythonanywhere"
 # --- END ---
 # repository ./drp-app-server
 @app.route(rule="/books")
