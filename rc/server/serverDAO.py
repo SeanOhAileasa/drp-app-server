@@ -1,4 +1,6 @@
+from sys import path; path.insert(1,"../../") # print(path)
 from flask import Flask
+from DAO.bookDAO import CBookDAO
 app=Flask(import_name=__name__,static_url_path="",static_folder="../../rc/static/")
 # repository ./drp-app-server
 @app.route(rule="/")
@@ -8,7 +10,7 @@ def fIndex():
 Input: 
 Process: 
 Output: string
-"""    
+"""  
     return "Flask App - pythonanywhere"
     #
     # curl http://127.0.0.1:5000
@@ -24,7 +26,8 @@ Process: (flask.jsonify)
 Output:
 """
     from flask import jsonify
-    return jsonify({})
+    nInsObjBook=CBookDAO() # instantiate object - CBookDAO
+    return jsonify(nInsObjBook.fInsMetGetAllDict())
     #
     # curl http://127.0.0.1:5000/books
     #
@@ -39,7 +42,7 @@ Process:
 Output:
 """
     from flask import jsonify
-    return jsonify({})
+    return jsonify(CBookDAO().fInsMetGetByID(nParID)) # instantiate object - CBookDAO
     #
     # curl http://127.0.0.1:5000/books/1
     #
@@ -60,7 +63,7 @@ Output:
         "title":request.json["title"],
         "author":request.json["author"],
         "price":request.json["price"]}
-    return jsonify({})
+    return jsonify(CBookDAO().fInsMetCreate(nBook)) # instantiate object - CBookDAO
     #
     # curl -X "POST" -d "{\"id\":10,\"title\":\"test title\",\"author\":\"test author\",\"price\":123}" -H Content-Type:application/json http://127.0.0.1:5000/books
     #
@@ -75,16 +78,17 @@ Process: (flask.request.json; flask.jsonify)
 Output:
 """ 
     from flask import jsonify,request
-    nFound=[]
-    if len(nFound)==0: # test found nothing
+    nFound=CBookDAO().fInsMetGetByID(nParID) # instantiate object - CBookDAO
+    if len(nFound)=={}: # test found nothing
         return jsonify({}),404 # return cannot find
-    nCurrent=nFound[0] # current is found
+    nCurrent=nFound # current is found
     if "title" in request.json:
         nCurrent["title"]=request.json["title"] # current new title
     if "author" in request.json:
         nCurrent["author"]=request.json["author"] # current new author
     if "price" in request.json:
         nCurrent["price"]=request.json["price"] # current new price
+    CBookDAO().fInsMetUpdate(nCurrent) # instantiate object - CBookDAO        
     return jsonify(nCurrent)
     #
     # curl -X "PUT" -d "{\"title\":\"testing title\",\"price\":999}" -H Content-Type:application/json http://127.0.0.1:5000/books/123
@@ -99,6 +103,7 @@ Input:
 Process: (flask.jsonify)
 Output:
 """ 
+    CBookDAO().fInsMetDeleteTuple(nParID) # instantiate object - CBookDAO  
     from flask import jsonify
     return jsonify({"done":True})
     #
