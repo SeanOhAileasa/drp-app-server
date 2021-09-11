@@ -1,4 +1,4 @@
-from sys import path; path.insert(1,"../../") # print(path)
+from sys import path; path.insert(1,"../../")
 from flask import Flask
 from DAO.bookDAO import CBookDAO
 app=Flask(import_name=__name__,static_url_path="",static_folder="../../rc/static/")
@@ -59,8 +59,7 @@ Output:
     from flask import request,jsonify,abort
     if not request.json: # request no json
         abort(400)
-    nBook={"id":request.json["id"],
-        "title":request.json["title"],
+    nBook={"title":request.json["title"],
         "author":request.json["author"],
         "price":request.json["price"]}
     return jsonify(CBookDAO().fInsMetCreate(nBook)) # instantiate object - CBookDAO
