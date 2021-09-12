@@ -1,4 +1,5 @@
 from mysql.connector import connect
+from dbconfig import nMySQL as cfg
 # define class - CBookDAO
 class CBookDAO: # blueprint state functionality
 	nClsAttDB="" # for all instances
@@ -9,7 +10,7 @@ class CBookDAO: # blueprint state functionality
 	Process: nClsAttDB
 	Output: called automatically when creating a new instance of CBookDAO
 	"""
-		self.nClsAttDB=connect(host="localhost",user="root",password="",database="data_representation") # establish a connection
+		self.nClsAttDB=connect(host=cfg["host"],user=cfg["username"],password=cfg["password"],database=cfg["database"]) # establish a connection		
 		print("<Connection Successful>")
 	def fInsMetCreate(self,nInsAttJSON):
 		""" Create record from JSON object passed (and extract).

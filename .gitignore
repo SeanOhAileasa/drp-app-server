@@ -1,3 +1,5 @@
+*config.py
+
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof
@@ -9,7 +11,7 @@
 *.fmt
 *.fot
 *.cb
-*.cb2
+*.cb2 
 
 ## Intermediate documents:
 *.dvi
