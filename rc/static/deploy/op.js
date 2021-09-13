@@ -1,3 +1,4 @@
+host=window.location.origin // ajax calls http://127.0.0.1:5000
 function fAddBookToTable(nParObjBookJS)
 {
     var nTableElement=document.getElementById("tableBook"); // DOM object HTMLTableElement
@@ -27,7 +28,7 @@ function fPopulateTable()
     // const nObjBookJS={"id":2,"title":"Learning Python","author":"Mark Lutz","price":3000} // testing purposes only
     // fAddBookToTable(nObjBookJS) // testing purposes only
     $.ajax({
-        "url":"/books", // ajax call fGetAll
+        "url":host+"/books", // ajax call fGetAll
         "method":"GET",
         "dataType":"JSON",
         "success":function(nParCollectionJSON)
@@ -40,6 +41,7 @@ function fPopulateTable()
             console.log("error: "+status+" msg:"+error);
         }                    
     });
+    console.log("host... "+host);
 }
 
 fPopulateTable()     
@@ -82,7 +84,7 @@ function fDoCreate()
     let nObjBookJS=fGetBookFromCreateUpdate(); // JS object Object
     // console.log("nObjBookJS: "+JSON.stringify(nObjBookJS)); // string names x3
     $.ajax({
-        "url":"/books", // ajax call fCreate
+        "url":host+"/books", // ajax call fCreate
         "method":"POST",
         "data":JSON.stringify(nObjBookJS),
         "dataType":"JSON",
@@ -141,7 +143,7 @@ function fUpdateServer(nParObjBookJS)
     nParObjBookJS.id=nFormCreateUpdate.querySelector("input[name=\"id\"]").value; // add name id
     // console.log("nParObjBookJS: "+JSON.stringify(nParObjBookJS)); // string names x4
     $.ajax({
-        "url":"/books/"+nParObjBookJS.id, // ajax call fUpdate
+        "url":host+"/books/"+nParObjBookJS.id, // ajax call fUpdate
         "method":"PUT",
         "data":JSON.stringify(nParObjBookJS),
         "dataType":"JSON",
@@ -169,7 +171,7 @@ function fDoDelete(nParThis)
     var nRemoveIndex=nRowElement.rowIndex;
     var nID=nRowElement.getAttribute("id");
     $.ajax({
-        "url":"/books/"+nID, // ajax call fDelete
+        "url":host+"/books/"+nID, // ajax call fDelete
         "method":"DELETE",
         "data":"",
         "dataType":"JSON",
