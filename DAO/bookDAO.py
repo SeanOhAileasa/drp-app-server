@@ -3,9 +3,9 @@ from dbconfig import nMySQL as cfg
 
 # define class - CBookDAO
 class CBookDAO: # blueprint state functionality
-	nClsAttDB="" # for all instances
+	# nClsAttDB="" # for all instances
 
-	def fConnectToDB(self):
+	def init_fConnectToDB(self):
 		""" Ensure connection continues - originally in __init__.
 		Using class attribute to create default value (state).
 
@@ -13,11 +13,25 @@ class CBookDAO: # blueprint state functionality
 	Process: nClsAttDB
 	Output: establish database connection
 	"""		
-		self.nClsAttDB=connect(
+		nClsAttDB=connect(
 			host=cfg["host"],
 			user=cfg["username"],
 			password=cfg["password"],
-			database=cfg["database"]) # establish a connection
+			database=cfg["database"],
+			pool_name="my_connection_pool",
+			pool_size=10) # establish a connection
+		return nClsAttDB
+
+	def fGetConnection(self):
+		""" Check if database is connected.
+		If not connected then establish database connection.
+
+	Input: object itself (self)
+	Process: establish database connection if not already connected
+	Output: database connection cursor
+	"""	
+		nClsAttDB=connect(pool_name="my_connection_pool")
+		return nClsAttDB
 
 	def __init__(self): # initialise object state
 		""" New instance of CBookDAO.
@@ -27,21 +41,8 @@ class CBookDAO: # blueprint state functionality
 	Output: called automatically when creating a new instance of CBookDAO
 	"""
 		# self.nClsAttDB=connect(host=cfg["host"],user=cfg["username"],password=cfg["password"],database=cfg["database"]) # moved to fConnectToDB
-		self.fConnectToDB()
-		print("<Connection Successful>")
-
-	def fGetCursor(self):
-		""" Check if database is connected.
-		If not connected then establish database connection.
-
-	Input: object itself (self)
-	Process: establish database connection if not already connected
-	Output: database connection cursor
-	"""		
-		if not self.nClsAttDB.is_connected():
-			self.fConnectToDB() # establish database connection
-		return self.nClsAttDB.cursor()
-
+		nClsAttDB=self.init_fConnectToDB() # make the connection
+		nClsAttDB.close() # close the connection
 
 	def fInsMetCreate(self,nInsAttJSON):
 		""" Create record from JSON object passed (and extract).
@@ -49,14 +50,15 @@ class CBookDAO: # blueprint state functionality
 	Input: object itself (self); nInsAttJSON
 	Process: nClsAttDBC
 	Output: record created and return id
-	"""		
-		nInsObjCursor=self.fGetCursor() # traveral over records
+	"""	
+		nClsAttDB=self.fGetConnection()
+		nInsObjCursor=nClsAttDB.cursor() # traveral over records
 		sqlQuery="INSERT INTO book (title,author,price) VALUES (%s,%s,%s)"
 		nValues=[nInsAttJSON["title"],nInsAttJSON["author"],nInsAttJSON["price"]]
 		nInsObjCursor.execute(sqlQuery,nValues) # abstracts away access
-		self.nClsAttDB.commit() # commit current transaction
+		nClsAttDB.commit() # commit current transaction
 		lastrowid=nInsObjCursor.lastrowid
-		nInsObjCursor.close() # close the cursor
+		nClsAttDB.close() # close the connection
 		return lastrowid
 
 	def fInsMetGetAllTuple(self):
@@ -66,11 +68,12 @@ class CBookDAO: # blueprint state functionality
 	Input: object itself (self)
 	Process: nClsAttDB
 	Output: show all records as a collection of tuples
-	"""			
-		nInsObjCursor=self.fGetCursor()
+	"""
+		nClsAttDB=self.fGetConnection()
+		nInsObjCursor=nClsAttDB.cursor() # traveral over records			
 		nInsObjCursor.execute("SELECT * FROM book")
 		all=nInsObjCursor.fetchall()
-		nInsObjCursor.close() # close the cursor
+		nClsAttDB.close() # close the nClsAttDB
 		return all
 
 	def fInsMetConvert2Dict(self,nInsAttResult):
@@ -102,13 +105,14 @@ class CBookDAO: # blueprint state functionality
 	Process: nClsAttDB; fInsMetConvert2Dict
 	Output: show all records as a collection of dict objects
 	"""			
-		nInsObjCursor=self.fGetCursor()
+		nClsAttDB=self.fGetConnection()
+		nInsObjCursor=nClsAttDB.cursor() # traveral over records
 		nInsObjCursor.execute("SELECT * FROM book")
 		nResult=nInsObjCursor.fetchall() # return a tuple
 		nCollectionDict=[]
 		for nEachResult in nResult:
 			nCollectionDict.append(self.fInsMetConvert2Dict(nEachResult)) # convert dict object
-		nInsObjCursor.close() # close the cursor			
+		nClsAttDB.close() # close the nClsAttDB
 		return nCollectionDict
 
 	def fInsMetGetByID(self,nInsAttID):
@@ -118,9 +122,12 @@ class CBookDAO: # blueprint state functionality
 	Process: nClsAttDB; fInsMetConvert2Dict
 	Output: show record by ID
 	"""			
-		nInsObjCursor=self.fGetCursor()
+		nClsAttDB=self.fGetConnection()
+		nInsObjCursor=nClsAttDB.cursor() # traveral over records
 		nInsObjCursor.execute("SELECT * FROM book WHERE id=%s",(nInsAttID,))
-		return self.fInsMetConvert2Dict(nInsObjCursor.fetchone())
+		book=self.fInsMetConvert2Dict(nInsObjCursor.fetchone())		
+		nClsAttDB.close() # close the connection		
+		return book
 
 	def fInsMetUpdate(self,nInsAttDict):
 		""" Passing dict object update record.
@@ -129,12 +136,13 @@ class CBookDAO: # blueprint state functionality
 	Process: nClsAttDB
 	Output: update record by dict object
 	"""			
-		nInsObjCursor=self.fGetCursor()
+		nClsAttDB=self.fGetConnection()
+		nInsObjCursor=nClsAttDB.cursor() # traveral over records
 		nNameValue=[nInsAttDict["title"],nInsAttDict["author"],nInsAttDict["price"],nInsAttDict["id"]] # match query order
 		nInsObjCursor.execute("UPDATE book SET title=%s,author=%s,price=%s WHERE id=%s",nNameValue)
-		self.nClsAttDB.commit()
-		nInsObjCursor.close() # close the cursor
-		return nInsAttDict
+		nClsAttDB.commit() # commit current transaction
+		nClsAttDB.close() # close the connection		
+		#return nInsAttDict
 
 	def fInsMetDeleteTuple(self,nInsAttID):
 		""" Using the values (%s) from somewhere passed in as a tuple executing as a variable delete record.
@@ -143,11 +151,12 @@ class CBookDAO: # blueprint state functionality
 	Process: nClsAttDB
 	Output: record deleted
 	"""
-		nInsObjCursor=self.fGetCursor()
+		nClsAttDB=self.fGetConnection()
+		nInsObjCursor=nClsAttDB.cursor() # traveral over records
 		nInsObjCursor.execute("DELETE FROM book where id=%s",(nInsAttID,))
-		self.nClsAttDB.commit()
-		nInsObjCursor.close() # close the cursor
-		return {}
+		nClsAttDB.commit() # commit current transaction		
+		nClsAttDB.close() # close the nClsAttDB		
+		#return {}
 
 	def fInsMetDeleteJSON(self,nInsAttJSON):
 		""" Passing dict index id object to delete record.
@@ -156,9 +165,10 @@ class CBookDAO: # blueprint state functionality
 	Process: nClsAttDB
 	Output: record deleted
 	"""
-		nInsObjCursor=self.nClsAttDB.fGetCursor()
+		nClsAttDB=self.fGetConnection()
+		nInsObjCursor=nClsAttDB.cursor() # traveral over records
 		n=[nInsAttJSON] # pass dict index
 		nInsObjCursor.execute("DELETE FROM book where id=%s",n)
-		self.nClsAttDB.commit()
-		nInsObjCursor.close() # close the cursor		
-		return {}		
+		nClsAttDB.commit() # commit current transaction		
+		nClsAttDB.close() # close the nClsAttDB		
+		#return {}		
