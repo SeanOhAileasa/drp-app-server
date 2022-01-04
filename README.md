@@ -2,87 +2,56 @@
 
 [![GMIT](https://github.com/SeanOhAileasa/SeanOhAileasa/blob/master/rc/gmit.png?raw=true)](https://web.archive.org/web/20201029063153/https://www.gmit.ie/computer-science-and-applied-physics/higher-diploma-science-computing-data-analytics-ict)
 
-## Data Representation - Course Material 2021
-### Topic: [App-server (``flask``)](https://nbviewer.jupyter.org/github/SeanOhAileasa/drp-app-server/blob/main/drp-app-server.ipynb)
+## Data Representation, Winter 21/22
+### Due: last commit on or before January 4th, 2022
+
+Winter 21/22 assessment for the ``Data Representation`` module (5 Credits) of the ``Higher Diploma in Science in Computing (Data Analytics) (H.Dip)`` programme (75 Credits) at **Galway-Mayo Institute of Technology (GMIT)**.
 
 ## Learning Outcomes
 
-Implementing a ``RESTful`` server using ``flask`` [1]. 
+Investigate and operate the protocols, standards and architectures used in representing data, focusing on interacting with data services across the internet. The objective is to get practical experience in developing applications that interact with such data.
 
-Requirements include an app-server that has a ``RESTful`` interface to provide CRUD operations for one database table [1].
+The module introduces the various means of retrieving data from external sources (for example, CSO, weather servers, etc.). The module looks at the formats that data can come in (``XML``, ``JSON``, ``CSV``) and how to retrieve (through an API) and process that data using JavaScript and Python. In addition, present data to the outside world by creating an ``API`` (Application Programmer's Interface) using the ``Python`` module ``Flask``.
 
-## Getting Started
-- Keeping in mind: i) GMIT assignment/project submission marking scheme; and ii) impression given to someone who is looking at this repository, endeavour to provide direct evidence of each of the items listed in each category where applicable - ``Research`` - ``Development`` - ``Consistency`` - ``Documentation``:
+In practical terms, the module looks at:
 
-1. Research:
+i. two means of representing data (``XML`` and ``JSON``);
 
-	- GMIT: **"Evidence of research performed on topic; submission based on referenced literature, particularly academic literature; evidence of understanding of the documentation for any software or libraries used."**
+- ``XML`` (of which ``HTML`` is a version) is used for rendering webpages;
 
-	- Investigation of packages used as demonstrated by references, background information, and approach: References will be in the format:
+- ``JSON`` is the JavaScript Object Notation and is a much shorter means of representing data.
 
-		- [referenceNumber] authorNames, referenceTitle, locationWebsiteBookVideo, dateMonthYear.
+ii. how data is transferred across the internet:
 
-	- Demonstrating work complete with appropriate references and not just for the problem but for level of understanding of the problem.
+- ``HTTP``;
 
-	- Code commentary will include details of package, module, object (if applicable) to demonstrate understanding of software documentation and libraries used. Enhancements to completed GMIT projects/assignments for self-examination and preparation for future modules of the H.Dip programme/self-education will not include this detail.
+- RESTful APIs are the standard means for interacting with programs around the web - mechanisms for performing basic CRUD operations across the internet.
 
-```python
-# b_T_hird_P_arty-imports
-from matplotlib.pyplot import plot
-```
-```python
-# package matplotlib - module pyplot
-plot(x,y)
-```
+iii. how to create a web application that will serve out data across the internet and to be able to consume that data either via a web page or a ``Python`` script.
 
-2. Development:
 
-	- GMIT: **"Environment can be set up as described; code works without tweaking and as described; code is efficient, clean, and clear; evidence of consideration of standards and conventions appropriate to code of this kind."**
+## Instructions
 
-	- Clear, well-written, and efficient code with appropriate comments - using Jupyter Notebook markdown cells to summarise concise workings. 
+Write a program that demonstrates the understand of creating and consuming ``RESTful APIs``—creating a Web application in ``Flask`` with a ``RESTful API`` and linking to one or more database tables. In addition, making web pages that can consume the ``API`` and perform ``CRUD`` operations on the data.
 
-	- As much as possible use the ``Style Guide for Python Code`` [Guido van Rossum](https://web.archive.org/web/20201029095211/https://www.python.org/dev/peps/pep-0008/). User-defined [Coding Conventions](#coding-conventsions) to be given separate section within this README.
+## Motivation
 
-3. Consistency:
+Initially, I proposed to complete an application with a focus on a Data Analytics problem. However, given the requirement to demonstrate an understanding of creating and consuming ``RESTful APIs``, instead focused on ensuring the module's overall learning outcomes are met and for future reference of the topics. In addition, I was also providing sample work to show prospective employers. The following ``Jupyter`` Notebooks each document my engagement of the module and are supplemented by additional research where appropriate: 
 
-	- GMIT: **"Evidence of planning and project management; pragmatic attitude to work as evidenced by well-considered commit history; commits are of a reasonable size; consideration of how commit history will be perceived by others."**
+#### i. [![nbviewer](https://raw.githubusercontent.com/jupyter/design/master/logos/Badges/nbviewer_badge.svg)](https://nbviewer.org/github/SeanOhAileasa/drp-data-representation/blob/main/drp-data-representation.ipynb)] ``Core Topics`` Jupyter Notebook
 
-	- Git commits blurb to include number of days outstanding before deadline (if applicable).
+#### ii. [![nbviewer](https://raw.githubusercontent.com/jupyter/design/master/logos/Badges/nbviewer_badge.svg)](https://nbviewer.org/github/SeanOhAileasa/adb-MySQL/blob/main/adb-MySQL.ipynb#datarep)] ``MySQL Topics`` Jupyter Notebook
 
-	- Commits to highlight changes made since the last commit so that reviews of the git history can demonstrate compartmentation of work into the different sections.   
 
-4. Documentation:
+#### iii. [![nbviewer](https://raw.githubusercontent.com/jupyter/design/master/logos/Badges/nbviewer_badge.svg)](https://nbviewer.org/github/SeanOhAileasa/drp-app-server/blob/main/drp-app-server.ipynb#Abstract)] ``Flask RESTful API`` Jupyter Notebook
 
-	- GMIT: **"Clear documentation of how to create an environment in which any code will run, how to prepare the code for running, how to run the code including setting any options or flags, and what to expect upon running the code. Concise descriptions of code in comments and README."**
+While the implemented ``RESTful APIs`` mirrors the module course example, it is essential to note that the implemented ``Flask`` app-server is a standalone application and is separate from the course example. For example, instead of ``ISBN`` as a ``Primary Key``, implemented an autoincrementing ``ID``.
 
-	- Include descriptions/plots of theoretical and practical aspects of the problem(s) - comments to be very concise for ease of readability. 
+## Installation
 
-	- Descriptions of code requiring further explanation will be presented in Jupyter Notebook markdown cells prior to code execution.   
-
-## Considerations
-
-- Using the four listed categories - ``Research`` - ``Development`` - ``Consistency`` - ``Documentation`` - in an attempt to not only focus on programming but also look at the information - data - manipulating the data and coming up with techniques.
-
-- Sometimes the most complex algorithms are counter-intuitive but do work and have been proven to work. Sometimes only a few lines of code is required to complete a topic/section - endeavour to explain the development of the algorithm and the reasoning behind why/how the code works.
-
-- Jupyter Notebook text formatting/presentation to be tidied up closer to the deadline (if applicable).
-
-## Coding Conventions
-
-- user-defined function / name (variable) - start with letters as follows
-
-| Example       | Signify 		          |
-| :------------ |:------------------------|
-|	f        	|	user-defined function |
-|	n        	|	name - no variables   |
-
-## Prerequisites
-
-- Require Python to be loaded on your local machine. Recommend downloading and installing Anaconda.
+- Requires ``Python`` to be loaded on your local machine. Recommend downloading and installing Anaconda.
 
 https://www.anaconda.com/download/
-
-## Execute Jupyter Notebook
 
 - The software must be downloaded and run on a machine as follows:
 
@@ -90,16 +59,57 @@ https://www.anaconda.com/download/
 
 	``git clone https://github.com/SeanOhAileasa/drp-app-server.git``
 
-    - Run Jupyter Notebooks from the command line with the following:
+	- Change directory to the cloned ``drp-app-server``
+	
+	``cd drp-app-server\``
 
-	``jupyter notebook``
+	- Create i the database; ii. with table ``book``; and iii populate with the top five New York Times Best Sellers (as of January 4th, 2022):
 
-    - Open notebook - ``drp-app-server.ipynb``
+	``python db.py`` # run python command
 
-    - Once running within the Jupyter environment can navigate with ease - links are plentiful.
+## Run ``Flask`` App
 
-	- ***Notebook links will not work on github given that github renders as static HTML - also not able to view equation tag numbers. Please run on a local machine or use nbviewer (see below).***
+There are two ways of starting a ``Flask`` app-server:
 
-- An alternative to downloading and running on a local machine with all features included (links/equation tag number etc) can view via [nbviewer](https://nbviewer.jupyter.org/github/SeanOhAileasa/drp-app-server/blob/main/drp-app-server.ipynb).
+a.) run the ``Python`` server program (giving the server's name).
+
+``python .\rc\server\serverDAO.py``
+
+b.) use environmental variables to set what is run:
+
+###### Linux
+
+``export FLASK_APP=.\rc\server\serverDAO``
+
+``export FLASK_ENV=development``
+
+
+``flask run``
+
+###### Windows
+
+``set FLASK_APP=.\rc\server\serverDAO``
+
+``set FLASK_ENV=development``
+
+``echo %FLASK_APP%``
+
+``flask run``
+
+### Browser
+
+``http://127.0.0.1:5000`` redirects to ``http://127.0.0.1:5000/index.html``
+
+### Hosting
+
+``https://seanohaileasa.pythonanywhere.com/`` redirects to ``https://seanohaileasa.pythonanywhere.com/index.html``
+
+## Credits
+
+``Andrew Beatty`` - Lecturer at ``GMIT`` - Excellent walk-throughs on topics, promoting self-learning's importance.
+
+## Contact
+
+``Associate Apprenticeship Programme Candidate`` in ``Cybersecurity`` and seeking a sponsor [[GitHub](https://github.com/SeanOhAileasa)].
 
 ## END
