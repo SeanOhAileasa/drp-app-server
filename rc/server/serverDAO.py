@@ -1,22 +1,24 @@
-from sys import path; path.insert(1,"../../")
 from flask import Flask
-from DAO.bookDAO import CBookDAO
+# from sys import path; path.insert(1,"../../") # original location "./DAO"
+from DAO.bookDAO import CBookDAO # moved to "./rc/server/DAO" 
+
 app=Flask(import_name=__name__,static_url_path="",static_folder="../../rc/static/")
-# repository ./drp-app-server
+
 @app.route(rule="/")
 def fIndex():
     """URL map for "/" with method "GET".
 
 Input: 
-Process: 
-Output: string
+Process: (flask.redirect)
+Output: redirection
 """  
-    return "Flask App - pythonanywhere"
+    from flask import redirect
+    return redirect("index.html")
     #
     # curl http://127.0.0.1:5000
     #
 # --- END ---
-# repository ./drp-app-server
+
 @app.route(rule="/books")
 def fGetAll():
     """URL map for "/books" with method "GET".
@@ -32,7 +34,7 @@ Output:
     # curl http://127.0.0.1:5000/books
     #
 # --- END ---
-# repository ./drp-app-server
+
 @app.route(rule="/books/<int:nParID>")
 def fFindById(nParID):
     """URL map for "/books/<int:nParID>" with method "GET".
@@ -47,7 +49,7 @@ Output:
     # curl http://127.0.0.1:5000/books/1
     #
 # --- END ---
-# repository ./drp-app-server
+
 @app.route(rule="/books",methods=["POST"])
 def fCreate():
     """URL map for "/books" with method "POST".
@@ -67,7 +69,7 @@ Output:
     # curl -X "POST" -d "{\"id\":10,\"title\":\"test title\",\"author\":\"test author\",\"price\":123}" -H Content-Type:application/json http://127.0.0.1:5000/books
     #
 # --- END ---
-# repository ./drp-app-server
+
 @app.route(rule="/books/<int:nParID>",methods=["PUT"])
 def fUpdate(nParID):
     """URL map for "/books/<int:nParID>" with method "PUT".
@@ -93,7 +95,7 @@ Output:
     # curl -X "PUT" -d "{\"title\":\"testing title\",\"price\":999}" -H Content-Type:application/json http://127.0.0.1:5000/books/123
     #
 # --- END ---
-# repository ./drp-app-server
+
 @app.route(rule="/books/<int:nParID>",methods=["DELETE"])
 def fDelete(nParID):
     """URL map for "/books/<int:nParID>" with method "DELETE".
@@ -109,5 +111,6 @@ Output:
     # curl -X "DELETE" http://127.0.0.1:5000/books/123
     #
 # --- END ---
+
 if __name__=="__main__":
     app.run(debug=True)

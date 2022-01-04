@@ -1,8 +1,15 @@
 from flask import Flask
 app=Flask(import_name=__name__,static_url_path="",static_folder="../../rc/static/")
-nBooks=[{"id":1,"Title":"Harry Potter","Author":"JK","Price":1000}, # type(nBooks[0]) # dict
-    {"id":2,"Title":"A1 Cook book","Author":"Mr Yo","Price":2000},
-    {"id":3,"Title":"Python","Author":"Mrs Bo","Price":3000}] # type(nBooks) # list
+
+#
+# https://web.archive.org/web/20220104195817/https://www.nytimes.com/books/best-sellers/
+# January 4th, 2022
+#
+nBooks=[{"id":1,"Title":"THE JUDGE'S LIST","Author":"John Grisham","Price":29}, # type(nBooks[0]) # dict
+    {"id":2,"Title":"THE STRANGER IN THE LIFEBOAT","Author":"Mitch Albom","Price":25},
+    {"id":3,"Title":"IT ENDS WITH US","Author":"Colleen Hoover","Price":30}, # type(nBooks) # list
+    {"id":4,"Title":"THE LINCOLN HIGHWAY","Author":"Amor Towles","Price":50},
+    {"id":5,"Title":"CALL US WHAT WE CARRY","Author":"Amanda Gorman","Price":15}]
 nNextID=4 # create new increment
 # repository ./drp-app-server
 @app.route(rule="/")
