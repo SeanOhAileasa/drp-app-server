@@ -1,6 +1,23 @@
+user="__you_user___" # defaults to "root"
+password="___your_password___" # default to ""
+database="mysql" # default can leave
+
+# from sys import path; path.insert(1,"./rc/server/") # location of dbconfig.py
+# from dbconfig import nMySQL as cfg # using dbconfig.py parameters
+
 try:
 	from mysql.connector import connect # third-party library import
-	nObjMySQLConnection=connect(host="localhost",user="root",password="983Rc599",database="mysql") # input your parameters
+	
+	#nObjMySQLConnection=connect(host=cfg["host"],
+	#	user=cfg["username"],
+	#	password=cfg["password"],
+	#	database="mysql") # input dbconfig.py parameters
+
+	nObjMySQLConnection=connect(host="localhost",
+		user=user,
+		password=password,
+		database=database) # input your parameters
+
 	nInsObjCursor=nObjMySQLConnection.cursor() # traveral over records
 	nInsObjCursor.execute("show tables") # abstracts away access
 	for nEachTable in nInsObjCursor:

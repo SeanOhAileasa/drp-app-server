@@ -63,9 +63,68 @@ https://www.anaconda.com/download/
 	
 	``cd drp-app-server\``
 
-	- Create i the database; ii. with table ``book``; and iii populate with the top five New York Times Best Sellers (as of January 4th, 2022):
+	- Creating sample database:
+
+	i database ``data_representation``;
+
+	ii. table ``book`` and;
+
+	iii populate top five New York Times Best Sellers (as of January 4th, 2022):
+
+	1.) **Edit File** ``db.py``:
+
+	a.) ``user="__you_user___" # defaults to "root"``
+
+	b.) ``password="___your_password___" # default to ""`` 
 
 	``python db.py`` # run python command
+
+	OR (advanced user):
+
+	2.) **Edit File** ``db.py``:
+
+	a.) Comment lines 1-3:
+
+	``# user="__you_user___" # defaults to "root"``
+
+	``# password="___your_password___" # default to ""``
+
+	``# database="mysql" # default can leave``
+
+	b.) Comment lines 16-19:
+
+	``# nObjMySQLConnection=connect(host="localhost",``
+
+	``#	user=user,``
+
+	``#	password=password,``
+
+	``#	database=database) # input your parameters``
+
+	c.) Create file ``dbconfig.py`` in directory ``./drp-app-server/rc/server``:
+
+	- Copy into ``dbconfig.py`` the following script and add ``username`` and ``password``:
+
+	``nMySQL={"host":"localhost","username":"__you_user___","password":"___your_password___","database":"data_representation"}``
+
+	d.) Uncomment lines 5-6:
+
+	``# from sys import path; path.insert(1,"./rc/server/") # location of dbconfig.py``
+
+	``# from dbconfig import nMySQL as cfg # using dbconfig.py parameters``
+
+
+	e.) Uncomment lines 11-14:
+
+	``nObjMySQLConnection=connect(host=cfg["host"],``
+
+	``	user=cfg["username"],``
+	
+	``	password=cfg["password"],``
+	
+	``	database="mysql") # input dbconfig.py parameters``	
+
+	f.) Save ``dbconfig.py``.
 
 ## Run ``Flask`` App
 
@@ -96,13 +155,13 @@ b.) use environmental variables to set what is run:
 
 ``flask run``
 
-### Browser
+## Local
 
-``http://127.0.0.1:5000`` redirects to ``http://127.0.0.1:5000/index.html``
+``http://127.0.0.1:5000`` 
 
-### Hosting
+## Hosting
 
-``https://seanohaileasa.pythonanywhere.com/`` redirects to ``https://seanohaileasa.pythonanywhere.com/index.html``
+``https://seanohaileasa.pythonanywhere.com/`` 
 
 ## Credits
 
